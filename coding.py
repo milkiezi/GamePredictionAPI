@@ -87,3 +87,28 @@ def ShapCalculateNoratings(input,classname):
     return positive5,negative5
 
 
+def classdefine(classnum):
+    classname = '0'
+    if int(classnum) == 0:
+        classname = '0-20000'
+    elif int(classnum) == 1:
+        classname = '20000-50000'
+    elif int(classnum) == 2:
+        classname = '50000-100000'
+    elif int(classnum) == 3:
+        classname = '100000-200000'
+    elif int(classnum) == 4:
+        classname = '200000-500000'
+    elif int(classnum) == 5:
+        classname = '500000-1000000'
+    elif int(classnum) == 6:
+        classname = '1000000-2000000'
+    elif int(classnum) == 7:
+        classname = '2000000-5000000'
+    elif int(classnum) == 8:
+        classname = '5000000-10000000'
+    elif int(classnum) == 9:
+        classname = '10000000-200000000'
+    return classname
+
+
