@@ -1,23 +1,24 @@
 import shap
 import pickle
 import pandas as pd
-import numpy as np
 import csv
 cb = pickle.load(open('F:\\python3.7.6\\api\\resource\\pc_game_with_rating_model.pkl', 'rb'))
 cbnoratings = pickle.load(open('F:\\python3.7.6\\api\\resource\\pc_game_withOut_rating_model.pkl', 'rb'))
+ratings_path = "F:\\python3.7.6\\api\\resource\\ratinfs_columns.csv"
+noratings_path = "F:\\python3.7.6\\api\\resource\\no_ratings_columns.csv"
 
 def CatboostPredict(input):
     predict = cb.predict(input)
     return(predict)
 
 def ShapCalculate(input,classname):
-    datacsv = pd.read_csv('F:\\python3.7.6\\api\\resource\\ratinfs_columns.csv')
+    datacsv = pd.read_csv(ratings_path)
     datacsv = datacsv.iloc[:0, :]
-    datacsv.to_csv('F:\\python3.7.6\\api\\resource\\ratinfs_columns.csv', index=False)
-    with open('F:\\python3.7.6\\api\\resource\\ratinfs_columns.csv', 'a', newline='') as file:
+    datacsv.to_csv(ratings_path, index=False)
+    with open(ratings_path, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(input)
-    datacsv = pd.read_csv('F:\\python3.7.6\\api\\resource\\ratinfs_columns.csv')
+    datacsv = pd.read_csv(ratings_path)
     explainer = shap.Explainer(cb)
     shap_values = explainer.shap_values(datacsv)
     shap_values_row = shap_values[int(classname)][0]
@@ -51,13 +52,13 @@ def CatboostPredictNoRatings(input):
     return(predict)
 
 def ShapCalculateNoratings(input,classname):
-    datacsv = pd.read_csv('F:\\python3.7.6\\api\\resource\\no_ratings_columns.csv')
+    datacsv = pd.read_csv(noratings_path)
     datacsv = datacsv.iloc[:0, :]
-    datacsv.to_csv('F:\\python3.7.6\\api\\resource\\no_ratings_columns.csv', index=False)
-    with open('F:\\python3.7.6\\api\\resource\\no_ratings_columns.csv', 'a', newline='') as file:
+    datacsv.to_csv(noratings_path, index=False)
+    with open(noratings_path, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(input)
-    datacsv = pd.read_csv('F:\\python3.7.6\\api\\resource\\no_ratings_columns.csv')
+    datacsv = pd.read_csv(noratings_path)
     explainer = shap.Explainer(cbnoratings)
     shap_values = explainer.shap_values(datacsv)
     shap_values_row = shap_values[int(classname)][0]
