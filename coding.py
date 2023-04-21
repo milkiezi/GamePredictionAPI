@@ -4,7 +4,7 @@ import pandas as pd
 import csv
 cb = pickle.load(open('F:\\python3.7.6\\api\\resource\\pc_game_with_rating_model.pkl', 'rb'))
 cbnoratings = pickle.load(open('F:\\python3.7.6\\api\\resource\\pc_game_withOut_rating_model.pkl', 'rb'))
-ratings_path = "F:\\python3.7.6\\api\\resource\\ratinfs_columns.csv"
+ratings_path = "F:\\python3.7.6\\api\\resource\\ratings_columns.csv"
 noratings_path = "F:\\python3.7.6\\api\\resource\\no_ratings_columns.csv"
 
 def CatboostPredict(input):
