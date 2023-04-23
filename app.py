@@ -16,8 +16,8 @@ def predict():
     new_estimated_sales = (str(estimated_sales).lstrip('[').rstrip(']'))
     positive5,negative5 = coding.ShapCalculate(feainput,new_estimated_sales)
     text_estimated_sales = coding.classdefine(new_estimated_sales)
-    return jsonify({'estimated sales class': new_estimated_sales,
-                    'estimated sales': text_estimated_sales,
+    return jsonify({'estimated_sales_class': new_estimated_sales,
+                    'estimated_sales': text_estimated_sales,
                     'positive1': positive5[0],
                     'positive2': positive5[1],
                     'positive3': positive5[2],
@@ -42,8 +42,8 @@ def predictno_ratings():
     new_estimated_sales = (str(estimated_sales).lstrip('[').rstrip(']'))
     positive5,negative5 = coding.ShapCalculateNoratings(feainput,new_estimated_sales)
     text_estimated_sales = coding.classdefine(new_estimated_sales)
-    return jsonify({'estimated sales class ': new_estimated_sales,
-                    'estimated sales': text_estimated_sales,
+    return jsonify({'estimated_sales_class': new_estimated_sales,
+                    'estimated_sales': text_estimated_sales,
                     'positive1': positive5[0],
                     'positive2': positive5[1],
                     'positive3': positive5[2],
@@ -57,6 +57,10 @@ def predictno_ratings():
                     })
 
 
+@app.route('/')
+def home():
+    return "PopGame Prediction API"
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=1337)
