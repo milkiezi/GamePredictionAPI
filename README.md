@@ -1,5 +1,5 @@
 # GamePredictionAPI
-this is a game popularity prediction API // senior Project
+this is a game popularity prediction API // senior Project <br>
 to install do
 
 
