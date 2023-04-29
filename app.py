@@ -16,19 +16,11 @@ def predict():
     new_estimated_sales = (str(estimated_sales).lstrip('[').rstrip(']'))
     positive5,negative5 = coding.ShapCalculate(feainput,new_estimated_sales)
     text_estimated_sales = coding.classdefine(new_estimated_sales)
-    return jsonify({'estimated_sales_class': new_estimated_sales,
+    return jsonify({'estimated_sales_class':new_estimated_sales,
                     'estimated_sales': text_estimated_sales,
-                    'positive1': positive5[0],
-                    'positive2': positive5[1],
-                    'positive3': positive5[2],
-                    'positive4': positive5[3],
-                    'positive5': positive5[4],
-                    'negative1': negative5[0],
-                    'negative2': negative5[1],
-                    'negative3': negative5[2],
-                    'negative4': negative5[3],
-                    'negative5': negative5[4],
-                    })
+                    'positive' : positive5,
+                    'negative' :negative5
+    })
 
 
 @app.route('/predict_noratings', methods=['POST'])
@@ -42,24 +34,17 @@ def predictno_ratings():
     new_estimated_sales = (str(estimated_sales).lstrip('[').rstrip(']'))
     positive5,negative5 = coding.ShapCalculateNoratings(feainput,new_estimated_sales)
     text_estimated_sales = coding.classdefine(new_estimated_sales)
-    return jsonify({'estimated_sales_class': new_estimated_sales,
+    return jsonify({'estimated_sales_class':new_estimated_sales,
                     'estimated_sales': text_estimated_sales,
-                    'positive1': positive5[0],
-                    'positive2': positive5[1],
-                    'positive3': positive5[2],
-                    'positive4': positive5[3],
-                    'positive5': positive5[4],
-                    'negative1': negative5[0],
-                    'negative2': negative5[1],
-                    'negative3': negative5[2],
-                    'negative4': negative5[3],
-                    'negative5': negative5[4],
-                    })
+                    'positive' : positive5,
+                    'negative' :negative5
+    })
 
 
 @app.route('/')
 def home():
     return "PopGame Prediction API"
+
 
 
 if __name__ == '__main__':
