@@ -17,24 +17,26 @@ def ShapCalculate(input,classname):
     shap_values = explainer.shap_values([input])
     shap_values_row = shap_values[int(classname)][0]
     feature_names = datacsv.columns.tolist()
-    features_with_shap = list(zip(feature_names, shap_values_row))
+    input_with_feature_names = [(feature_names[i], val) for i, val in enumerate(input)]
+    features_with_shap = list(zip(input_with_feature_names, shap_values_row))
     sorted_features = sorted(features_with_shap, key=lambda x: abs(x[1]), reverse=True)
     positive = []
     negative = []
-    for feature, shap_value in sorted_features:
+    for (feature, input_val), shap_value in sorted_features:
         contribution = shap_value 
         if shap_value > 0:
-            positive.append(f"{feature}: +{contribution:.2f}")
+            positive.append((feature, input_val, contribution))
         else:
-            negative.append(f"{feature}: -{abs(contribution):.2f}")
+            negative.append((feature, input_val, abs(contribution)))
     positive5 = []
     for x in positive[0:5]:
-        positive5.append(x)
+        positive5.append(f"{x[0]} ({x[1]}): +{x[2]:.2f}")
     negative5 = []
     for x in negative[0:5]:
-        negative5.append(x)
+        negative5.append(f"{x[0]} ({x[1]}): -{x[2]:.2f}")
 
-    return positive5,negative5
+    return positive5, negative5
+
 
 
 def CatboostPredictNoRatings(input):
@@ -47,25 +49,27 @@ def ShapCalculateNoratings(input,classname):
     shap_values = explainer.shap_values([input])
     shap_values_row = shap_values[int(classname)][0]
     feature_names = datacsv.columns.tolist()
-    features_with_shap = list(zip(feature_names, shap_values_row))
+    input_with_feature_names = [(feature_names[i], val) for i, val in enumerate(input)]
+    features_with_shap = list(zip(input_with_feature_names, shap_values_row))
     sorted_features = sorted(features_with_shap, key=lambda x: abs(x[1]), reverse=True)
     positive = []
     negative = []
-    for feature, shap_value in sorted_features:
+    for (feature, input_val), shap_value in sorted_features:
         contribution = shap_value 
         if shap_value > 0:
-            positive.append(f"{feature}: +{contribution:.2f}")
+            positive.append((feature, input_val, contribution))
         else:
-            negative.append(f"{feature}: -{abs(contribution):.2f}")
+            negative.append((feature, input_val, abs(contribution)))
     positive5 = []
     for x in positive[0:5]:
-        positive5.append(x)
+        positive5.append(f"{x[0]} ({x[1]}): +{x[2]:.2f}")
     negative5 = []
     for x in negative[0:5]:
-        negative5.append(x)
+        negative5.append(f"{x[0]} ({x[1]}): -{x[2]:.2f}")
+
+    return positive5, negative5
 
 
-    return positive5,negative5
 
 
 def classdefine(classnum):
@@ -91,5 +95,6 @@ def classdefine(classnum):
     elif int(classnum) == 9:
         classname = '10000000-200000000'
     return classname
+
 
 
