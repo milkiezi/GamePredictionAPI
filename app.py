@@ -3,12 +3,13 @@ import coding
 
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
+
 
 @app.route('/predict_ratings', methods=['POST'])
 def predict():
     input_data = request.get_json()
     feainput = input_data['input']
-    text_estimated_sales = "0"
     try: 
         estimated_sales = coding.CatboostPredict(feainput)
     except Exception as e: print(e)
@@ -43,6 +44,7 @@ def predictno_ratings():
 
 @app.route('/')
 def home():
+    
     return "PopGame Prediction API"
 
 
@@ -50,3 +52,5 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True,port=1337)
+
+
