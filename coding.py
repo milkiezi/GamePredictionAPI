@@ -24,16 +24,24 @@ def ShapCalculate(input,classname):
     negative = []
     for (feature, input_val), shap_value in sorted_features:
         contribution = shap_value 
-        if shap_value > 0:
-            positive.append((feature, input_val, contribution))
+        if shap_value > 0 :
+            if (feature == "price" or feature =="Achievements" or feature == "Average_playtime" or feature == "Median_playtime" or feature == "Positive_ratings" or feature == "Negative_ratings"):
+                positive.append((feature, input_val, contribution))
+            else:
+                if input_val != 0:
+                    positive.append((feature, input_val, contribution))
         else:
-            negative.append((feature, input_val, abs(contribution)))
+            if (feature == "price" or feature =="Achievements" or feature == "Average_playtime" or feature == "Median_playtime" or feature == "Positive_ratings" or feature == "Negative_ratings"):
+                negative.append((feature, input_val, abs(contribution)))
+            else:
+                if input_val != 0:
+                    negative.append((feature, input_val, abs(contribution)))
     positive5 = []
     for x in positive[0:5]:
-        positive5.append(f"{x[0]} ({x[1]}): +{x[2]:.2f}")
+        positive5.append(f"{x[0]}: {x[1]} (+{x[2]:.2f})")
     negative5 = []
     for x in negative[0:5]:
-        negative5.append(f"{x[0]} ({x[1]}): -{x[2]:.2f}")
+        negative5.append(f"{x[0]}: {x[1]} (-{x[2]:.2f})")
 
     return positive5, negative5
 
@@ -57,15 +65,23 @@ def ShapCalculateNoratings(input,classname):
     for (feature, input_val), shap_value in sorted_features:
         contribution = shap_value 
         if shap_value > 0:
-            positive.append((feature, input_val, contribution))
+            if (feature == "price" or feature =="Achievements" or feature == "Average_playtime" or feature == "Median_playtime"):
+                positive.append((feature, input_val, contribution))
+            else:
+                if input_val != 0:
+                    positive.append((feature, input_val, contribution))
         else:
-            negative.append((feature, input_val, abs(contribution)))
+            if (feature == "price" or feature =="Achievements" or feature == "Average_playtime" or feature == "Median_playtime"):
+                negative.append((feature, input_val, abs(contribution)))
+            else:
+                if input_val != 0:
+                    negative.append((feature, input_val, abs(contribution)))
     positive5 = []
     for x in positive[0:5]:
-        positive5.append(f"{x[0]} ({x[1]}): +{x[2]:.2f}")
+        positive5.append(f"{x[0]}: {x[1]} (+{x[2]:.2f})")
     negative5 = []
     for x in negative[0:5]:
-        negative5.append(f"{x[0]} ({x[1]}): -{x[2]:.2f}")
+        negative5.append(f"{x[0]}: {x[1]} (-{x[2]:.2f})")
 
     return positive5, negative5
 
@@ -95,6 +111,5 @@ def classdefine(classnum):
     elif int(classnum) == 9:
         classname = '10000000-200000000'
     return classname
-
 
 
